@@ -13,7 +13,7 @@ namespace DataGridView_CS.ucControl
     {
         int PageSize = 5;
 
-        public event EventHandler<int> PageChanged;
+        public event EventHandler<PageChangedEventArgs> PageChanged;
 
 
         public ButtonPager()
@@ -112,8 +112,18 @@ namespace DataGridView_CS.ucControl
         {
             Button btnPager = (sender as Button);
             if (this.PageChanged != null)
-                this.PageChanged(this, Convert.ToInt32(btnPager.Name));
+                this.PageChanged(this, new PageChangedEventArgs(Convert.ToInt32(btnPager.Name)));
         }
+    }
+
+    public class PageChangedEventArgs : EventArgs
+    {
+        public PageChangedEventArgs(int id)
+        {
+            CurrentPage = id;
+        }
+
+        public int CurrentPage { get; private set; }
     }
 
     class Page
